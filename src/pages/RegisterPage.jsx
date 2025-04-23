@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { User, Mail, Lock, Globe, Phone, Eye, EyeOff } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -61,12 +63,19 @@ const RegisterPage = () => {
     setFormData({ ...formData, [name]: newValue });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validate()) {
-      console.log('Formulario válido:', formData);
+      localStorage.setItem('registroTemp', JSON.stringify(formData));
+      localStorage.setItem('rol', 'Entrenador'); // o luego cambiar por 'Cliente' o 'Entrenador'
+      navigate('/espera-validacion');
     }
+
   };
+
 
   return (
     <div className="min-h-screen flex">
